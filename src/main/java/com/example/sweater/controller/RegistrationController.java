@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.Collections;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(User user, BindingResult result, Map<String, Object> model) {
+    public String addUser(@Valid User user, BindingResult result, Map<String, Object> model) {
         if (result.hasErrors()) {
             model.put("message", "Invalid data!");
             return "registration";

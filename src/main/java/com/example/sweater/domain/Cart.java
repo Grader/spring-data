@@ -21,8 +21,9 @@ public class Cart {
             inverseJoinColumns = {@JoinColumn(name = "good_id")})
     private Set<Good> goods = new HashSet<>();
 
-    public Cart(User user) {
+    public Cart(User user, Set<Good> goods) {
         this.user = user;
+        this.goods = goods;
     }
 
     public Cart() {

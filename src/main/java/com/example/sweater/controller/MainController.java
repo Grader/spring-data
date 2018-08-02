@@ -1,7 +1,9 @@
 package com.example.sweater.controller;
 
+import com.example.sweater.domain.Cart;
 import com.example.sweater.domain.Good;
 import com.example.sweater.domain.User;
+import com.example.sweater.repos.CartRepo;
 import com.example.sweater.repos.GoodRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,15 +12,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class MainController {
 
     @Autowired
     private GoodRepo goodRepo;
+
+    @Autowired
+    private CartRepo cartRepo;
 
     private List<String> goodList = new ArrayList<>();
 
@@ -62,8 +65,20 @@ public class MainController {
     }
 
     @GetMapping("/youcart")
-    public String yourcart(Model model) {
+    public String yourcart(@AuthenticationPrincipal User user, Model model) {
         Iterable<Good> goods = goodRepo.findAll();
+        Set<Good> selectedGoods = new HashSet<>();
+
+        for (String strinId : goodList) {
+            System.out.println(goodRepo.findById(Long.parseLong(strinId)).orElse(new Good()));
+            Good good = goodRepo.findById(Long.parseLong(strinId)).orElse(new Good());
+            selectedGoods.add(good);
+        }
+        System.out.println(selectedGoods);
+
+
+        cartRepo.save(new Cart(user, selectedGoods));
+
         model.addAttribute("goods", goods);
         model.addAttribute("goodList", goodList);
 

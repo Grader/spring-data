@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -17,6 +19,8 @@ public class MainController {
 
     @Autowired
     private GoodRepo goodRepo;
+
+    private List<String> goodList = new ArrayList<>();
 
     @GetMapping("/")
     public String greeting(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
@@ -28,6 +32,7 @@ public class MainController {
         }
         model.addAttribute("goods", goods);
         model.addAttribute("filter", filter);
+
         return "greeting";
     }
 
@@ -42,6 +47,27 @@ public class MainController {
         model.addAttribute("goods", goods);
         model.addAttribute("filter", filter);
         return "main";
+    }
+
+    @GetMapping("/cart")
+    public String bask(@RequestParam(required = false, defaultValue = "") String basket, Model model) {
+        Iterable<Good> goods = goodRepo.findAll();
+
+        model.addAttribute("goods", goods);
+        model.addAttribute("basket", basket);
+        goodList.add(basket);
+        System.out.println(basket);
+        System.out.println(goodList);
+        return "greeting";
+    }
+
+    @GetMapping("/youcart")
+    public String yourcart(Model model) {
+        Iterable<Good> goods = goodRepo.findAll();
+        model.addAttribute("goods", goods);
+        model.addAttribute("goodList", goodList);
+
+        return "youcart";
     }
 
     @PostMapping("/main")

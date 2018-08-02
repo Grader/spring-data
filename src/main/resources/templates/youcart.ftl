@@ -8,9 +8,9 @@
 
 
     <div class="header_category">
-                  <p class="text_category">Автомобили</p>
+                  <p class="text_category">Ваша корзина</p>
               </div>
-              <div class="category" id="auto">
+              <div class="category">
               <#list goods as good>
 
               <#if good.cat == "auto">
@@ -21,7 +21,7 @@
               <br></p></div><div class="text_product">USD ${good.price}</div>
               <form method="get" action="/cart">
 
-                      <div><button class="btn btn-primary" name="basket" value="${good.id}" <input type="submit" id="${good.id}">В корзину</button>
+                      <div><button class="btn btn-primary" name="basket" value="${good.id}" <input type="submit" id="${good.id}">Удалить</button>
                       </div>
                       </form>
               </div>
@@ -29,26 +29,6 @@
                  </#list>
               </div>
 
-                  <div class="header_category">
-                      <p class="text_category">Мотоциклы</p>
-                  </div>
-                  <div class="category" id="moto">
-                  <#list goods as good>
-
-                  <#if good.cat == "moto">
-                  <br>
-                  <div class="products" id="${good.id}">
-                  <div class="img"><img src="/static/imgs/${good.img}"></img>
-                  <p>${good.tag}
-                  <br></p></div><div class="text_product">USD ${good.price}</div>
-                  <form method="get">
-                          <div><button class="btn btn-primary" name="basket" value="${good.id}" <input type="submit" id="${good.id}">В корзину</button>
-                          </div>
-                          </form>
-                  </div>
-                  </#if>
-                     </#list>
-                  </div>
 
     <footer class="footer">
                 <p id="text_footer">

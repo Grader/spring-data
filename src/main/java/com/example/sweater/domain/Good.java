@@ -1,15 +1,14 @@
 package com.example.sweater.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Good {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String cat;
@@ -19,6 +18,12 @@ public class Good {
     private String price;
 
     private String img;
+
+    @ManyToMany
+    @JoinTable(
+            name = "carts_goods", joinColumns = {@JoinColumn(name = "good_id")},
+            inverseJoinColumns = {@JoinColumn(name = "cart_id")})
+    private Set<Cart> carts = new HashSet<>();
 
     public Good(String cat, String tag, String price, String img) {
         this.cat = cat;
@@ -72,5 +77,13 @@ public class Good {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public Set<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(Set<Cart> carts) {
+        this.carts = carts;
     }
 }

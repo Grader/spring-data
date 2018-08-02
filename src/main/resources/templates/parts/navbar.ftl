@@ -11,7 +11,7 @@
         <ul class="navbar-nav mr-auto">
 
             <li class="nav-item">
-                <a class="nav-link" href="/">Корзина</a>
+                <a class="nav-link" href="/youcart">Корзина</a>
             </li>
 
             <#if isAdmin>

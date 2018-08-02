@@ -74,8 +74,6 @@ public class MainController {
             Good good = goodRepo.findById(Long.parseLong(strinId)).orElse(new Good());
             selectedGoods.add(good);
         }
-        System.out.println(selectedGoods);
-
 
         cartRepo.save(new Cart(user, selectedGoods));
 

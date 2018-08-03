@@ -99,4 +99,12 @@ public class User implements UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public Set<Cart> getCart() {
+        return cart;
+    }
+
+    public void setCart(Set<Cart> cart) {
+        this.cart = cart;
+    }
 }

@@ -59,28 +59,46 @@ public class MainController {
         model.addAttribute("goods", goods);
         model.addAttribute("basket", basket);
         goodList.add(basket);
-        System.out.println(basket);
-        System.out.println(goodList);
+
         return "greeting";
     }
 
     @GetMapping("/youcart")
     public String yourcart(@AuthenticationPrincipal User user, Model model) {
         Iterable<Good> goods = goodRepo.findAll();
+        Iterable<Cart> carts;
         Set<Good> selectedGoods = new HashSet<>();
+        Set<Good> allSelectedGoods = new HashSet<>();
 
-        for (String strinId : goodList) {
-            System.out.println(goodRepo.findById(Long.parseLong(strinId)).orElse(new Good()));
-            Good good = goodRepo.findById(Long.parseLong(strinId)).orElse(new Good());
+        for (String stringId : goodList) {
+            Good good = goodRepo.findById(Long.parseLong(stringId)).orElse(new Good());
             selectedGoods.add(good);
         }
 
         cartRepo.save(new Cart(user, selectedGoods));
+        carts = cartRepo.findByUserId(user.getId());
 
+        for (Cart cart : carts) {
+            allSelectedGoods.addAll(cart.getGoods());
+        }
         model.addAttribute("goods", goods);
         model.addAttribute("goodList", goodList);
-
+        model.addAttribute("selectedGoods", selectedGoods);
+        model.addAttribute("allSelectedGoods", allSelectedGoods);
         return "youcart";
+    }
+
+    @GetMapping("/cartdel")
+    public String baskDel(@RequestParam(required = false, defaultValue = "") String basketdel, Model model) {
+        Iterable<Good> goods = goodRepo.findAll();
+
+        model.addAttribute("goods", goods);
+        model.addAttribute("basketdel", basketdel);
+        goodList.remove(basketdel);
+
+        System.out.println(basketdel);
+        System.out.println(goodList);
+        return "redirect:/youcart";
     }
 
     @PostMapping("/main")

@@ -11,21 +11,19 @@
                   <p class="text_category">Ваша корзина</p>
               </div>
               <div class="category">
-              <#list goods as good>
+              <#list allSelectedGoods as good>
 
-              <#if good.cat == "auto">
               <br>
               <div class="products" id="${good.id}">
               <div class="img"><img src="/static/imgs/${good.img}"></img>
               <p>${good.tag}
               <br></p></div><div class="text_product">USD ${good.price}</div>
-              <form method="get" action="/cart">
+              <form method="get" action="/cartdel">
 
-                      <div><button class="btn btn-primary" name="basket" value="${good.id}" <input type="submit" id="${good.id}">Удалить</button>
+                      <div><button class="btn btn-primary" name="basketdel" value="${good.id}" <input type="submit" id="${good.id}">Удалить</button>
                       </div>
                       </form>
               </div>
-              </#if>
                  </#list>
               </div>
 

@@ -5,6 +5,8 @@ import com.example.sweater.domain.Good;
 import com.example.sweater.domain.User;
 import com.example.sweater.repos.CartRepo;
 import com.example.sweater.repos.GoodRepo;
+import com.example.sweater.service.CartService;
+import com.example.sweater.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,20 +20,20 @@ import java.util.*;
 public class MainController {
 
     @Autowired
-    private GoodRepo goodRepo;
+    private GoodService goodService;
 
     @Autowired
-    private CartRepo cartRepo;
+    private CartService cartService;
 
     private List<String> goodList = new ArrayList<>();
 
     @GetMapping("/")
     public String greeting(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-        Iterable<Good> goods = goodRepo.findAll();
+        Iterable<Good> goods = goodService.findAllGood();
         if (filter != null && !filter.isEmpty()) {
-            goods = goodRepo.findByTag(filter);
+            goods = goodService.findByTagContaining(filter);
         } else {
-            goods = goodRepo.findAll();
+            goods = goodService.findAllGood();
         }
         model.addAttribute("goods", goods);
         model.addAttribute("filter", filter);
@@ -41,11 +43,11 @@ public class MainController {
 
     @GetMapping("/main")
     public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-        Iterable<Good> goods = goodRepo.findAll();
+        Iterable<Good> goods = goodService.findAllGood();
         if (filter != null && !filter.isEmpty()) {
-            goods = goodRepo.findByTag(filter);
+            goods = goodService.findByTagContaining(filter);
         } else {
-            goods = goodRepo.findAll();
+            goods = goodService.findAllGood();
         }
         model.addAttribute("goods", goods);
         model.addAttribute("filter", filter);
@@ -54,7 +56,7 @@ public class MainController {
 
     @GetMapping("/cart")
     public String bask(@RequestParam(required = false, defaultValue = "") String basket, Model model) {
-        Iterable<Good> goods = goodRepo.findAll();
+        Iterable<Good> goods = goodService.findAllGood();
 
         model.addAttribute("goods", goods);
         model.addAttribute("basket", basket);
@@ -65,18 +67,18 @@ public class MainController {
 
     @GetMapping("/youcart")
     public String yourcart(@AuthenticationPrincipal User user, Model model) {
-        Iterable<Good> goods = goodRepo.findAll();
+        Iterable<Good> goods = goodService.findAllGood();
         Iterable<Cart> carts;
         Set<Good> selectedGoods = new HashSet<>();
         Set<Good> allSelectedGoods = new HashSet<>();
 
         for (String stringId : goodList) {
-            Good good = goodRepo.findById(Long.parseLong(stringId)).orElse(new Good());
+            Good good = goodService.findById(Long.parseLong(stringId)).orElse(new Good());
             selectedGoods.add(good);
         }
 
-        cartRepo.save(new Cart(user, selectedGoods));
-        carts = cartRepo.findByUserId(user.getId());
+        cartService.save(new Cart(user, selectedGoods));
+        carts = cartService.findByUserId(user.getId());
 
         for (Cart cart : carts) {
             allSelectedGoods.addAll(cart.getGoods());
@@ -90,14 +92,12 @@ public class MainController {
 
     @GetMapping("/cartdel")
     public String baskDel(@RequestParam(required = false, defaultValue = "") String basketdel, Model model) {
-        Iterable<Good> goods = goodRepo.findAll();
+        Iterable<Good> goods = goodService.findAllGood();
 
         model.addAttribute("goods", goods);
         model.addAttribute("basketdel", basketdel);
         goodList.remove(basketdel);
 
-        System.out.println(basketdel);
-        System.out.println(goodList);
         return "redirect:/youcart";
     }
 
@@ -108,8 +108,8 @@ public class MainController {
             @RequestParam String tag, @RequestParam String price, @RequestParam String img, Map<String, Object> model
     ) throws IOException {
         Good good = new Good(cat, tag, price, img);
-        goodRepo.save(good);
-        Iterable<Good> goods = goodRepo.findAll();
+        goodService.save(good);
+        Iterable<Good> goods = goodService.findAllGood();
         model.put("goods", goods);
         return "main";
     }

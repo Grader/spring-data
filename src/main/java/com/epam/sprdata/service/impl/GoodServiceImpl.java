@@ -1,8 +1,8 @@
-package com.example.sweater.service.impl;
+package com.epam.sprdata.service.impl;
 
-import com.example.sweater.domain.Good;
-import com.example.sweater.repos.GoodRepo;
-import com.example.sweater.service.GoodService;
+import com.epam.sprdata.domain.Good;
+import com.epam.sprdata.repos.GoodRepo;
+import com.epam.sprdata.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

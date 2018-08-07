@@ -1,4 +1,4 @@
-package com.example.sweater.domain;
+package com.epam.sprdata.domain;
 
 import javax.persistence.*;
 import java.util.HashSet;

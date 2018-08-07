@@ -1,6 +1,6 @@
-package com.example.sweater.repos;
+package com.epam.sprdata.repos;
 
-import com.example.sweater.domain.User;
+import com.epam.sprdata.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepo extends JpaRepository<User, Long> {

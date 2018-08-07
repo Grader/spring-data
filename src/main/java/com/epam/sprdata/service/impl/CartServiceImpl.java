@@ -1,8 +1,8 @@
-package com.example.sweater.service.impl;
+package com.epam.sprdata.service.impl;
 
-import com.example.sweater.domain.Cart;
-import com.example.sweater.repos.CartRepo;
-import com.example.sweater.service.CartService;
+import com.epam.sprdata.domain.Cart;
+import com.epam.sprdata.repos.CartRepo;
+import com.epam.sprdata.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,12 +1,10 @@
-package com.example.sweater.controller;
+package com.epam.sprdata.controller;
 
-import com.example.sweater.domain.Cart;
-import com.example.sweater.domain.Good;
-import com.example.sweater.domain.User;
-import com.example.sweater.repos.CartRepo;
-import com.example.sweater.repos.GoodRepo;
-import com.example.sweater.service.CartService;
-import com.example.sweater.service.GoodService;
+import com.epam.sprdata.domain.Cart;
+import com.epam.sprdata.domain.Good;
+import com.epam.sprdata.domain.User;
+import com.epam.sprdata.service.CartService;
+import com.epam.sprdata.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

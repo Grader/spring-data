@@ -1,6 +1,6 @@
-package com.example.sweater.service;
+package com.epam.sprdata.service;
 
-import com.example.sweater.repos.UserRepo;
+import com.epam.sprdata.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

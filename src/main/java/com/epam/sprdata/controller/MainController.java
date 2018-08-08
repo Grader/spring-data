@@ -11,8 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class MainController {
@@ -35,7 +38,6 @@ public class MainController {
         }
         model.addAttribute("goods", goods);
         model.addAttribute("filter", filter);
-
         return "greeting";
     }
 
@@ -55,11 +57,9 @@ public class MainController {
     @GetMapping("/cart")
     public String bask(@RequestParam(required = false, defaultValue = "") String basket, Model model) {
         Iterable<Good> goods = goodService.findAllGood();
-
         model.addAttribute("goods", goods);
         model.addAttribute("basket", basket);
         goodList.add(basket);
-
         return "greeting";
     }
 
@@ -74,7 +74,6 @@ public class MainController {
             Good good = goodService.findById(Long.parseLong(stringId)).orElse(new Good());
             selectedGoods.add(good);
         }
-
         cartService.save(new Cart(user, selectedGoods));
         carts = cartService.findByUserId(user.getId());
 
@@ -91,20 +90,16 @@ public class MainController {
     @GetMapping("/cartdel")
     public String baskDel(@RequestParam(required = false, defaultValue = "") String basketdel, Model model) {
         Iterable<Good> goods = goodService.findAllGood();
-
         model.addAttribute("goods", goods);
         model.addAttribute("basketdel", basketdel);
         goodList.remove(basketdel);
-
         return "redirect:/youcart";
     }
 
     @PostMapping("/main")
     public String add(
-            @AuthenticationPrincipal User user,
-            @RequestParam String cat,
-            @RequestParam String tag, @RequestParam String price, @RequestParam String img, Map<String, Object> model
-    ) throws IOException {
+            @AuthenticationPrincipal User user, @RequestParam String cat,
+            @RequestParam String tag, @RequestParam String price, @RequestParam String img, Map<String, Object> model) {
         Good good = new Good(cat, tag, price, img);
         goodService.save(good);
         Iterable<Good> goods = goodService.findAllGood();

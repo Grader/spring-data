@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sweater</title>
+    <title>shop</title>
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/style_good.css">
     <link rel="stylesheet" href="/static/css/style_modal.css">

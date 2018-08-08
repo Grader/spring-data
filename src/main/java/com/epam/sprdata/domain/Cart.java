@@ -16,8 +16,7 @@ public class Cart {
     private User user;
 
     @ManyToMany
-    @JoinTable(
-            name = "carts_goods", joinColumns = {@JoinColumn(name = "cart_id")},
+    @JoinTable(name = "carts_goods", joinColumns = {@JoinColumn(name = "cart_id")},
             inverseJoinColumns = {@JoinColumn(name = "good_id")})
     private Set<Good> goods = new HashSet<>();
 

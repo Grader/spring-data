@@ -27,13 +27,13 @@ public class GoodRepoJdbc {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<Good> findAll() {
         return jdbcTemplate.query("select * from good",
                 new GoodRowMapper());
     }
 
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public Good findGoodById(Long id) {
         return jdbcTemplate.queryForObject(
                 "select * from good where id=?",
@@ -43,12 +43,11 @@ public class GoodRepoJdbc {
     @Transactional
     public Good create(final Good good) {
         final String sql = "insert into good (cat,tag,price,img) values(?,?,?,?)";
-
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(
                     Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(sql, new String[] { "id" });
+                PreparedStatement ps = connection.prepareStatement(sql, new String[]{"id"});
                 ps.setString(1, good.getCat());
                 ps.setString(2, good.getTag());
                 ps.setString(3, good.getPrice());
@@ -61,7 +60,7 @@ public class GoodRepoJdbc {
         return good;
     }
 
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<Good> findByTagContaining(String tag) {
         return jdbcTemplate.query("select * from good where tag like ?",
                 new GoodRowMapper(), "%" + tag + "%");

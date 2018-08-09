@@ -71,7 +71,8 @@ public class MainController {
         Set<Good> allSelectedGoods = new HashSet<>();
 
         for (String stringId : goodList) {
-            Good good = goodService.findById(Long.parseLong(stringId)).orElse(new Good());
+            //Good good = goodService.findById(Long.parseLong(stringId)).orElse(new Good());
+            Good good = goodService.findById(Long.parseLong(stringId));
             selectedGoods.add(good);
         }
         cartService.save(new Cart(user, selectedGoods));

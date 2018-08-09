@@ -8,7 +8,7 @@ import java.util.Set;
 public class Good {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String cat;

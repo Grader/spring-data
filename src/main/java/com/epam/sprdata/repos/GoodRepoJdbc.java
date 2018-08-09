@@ -1,0 +1,69 @@
+package com.epam.sprdata.repos;
+
+import com.epam.sprdata.domain.Good;
+import com.epam.sprdata.domain.GoodRowMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+import java.util.Objects;
+
+@Repository
+public class GoodRepoJdbc {
+
+    private static final Logger log = LoggerFactory.getLogger(GoodRepoJdbc.class);
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Transactional(readOnly=true)
+    public List<Good> findAll() {
+        return jdbcTemplate.query("select * from good",
+                new GoodRowMapper());
+    }
+
+    @Transactional(readOnly=true)
+    public Good findGoodById(Long id) {
+        return jdbcTemplate.queryForObject(
+                "select * from good where id=?",
+                new Object[]{id}, new GoodRowMapper());
+    }
+
+    @Transactional
+    public Good create(final Good good) {
+        final String sql = "insert into good (cat,tag,price,img) values(?,?,?,?)";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            public PreparedStatement createPreparedStatement(
+                    Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(sql, new String[] { "id" });
+                ps.setString(1, good.getCat());
+                ps.setString(2, good.getTag());
+                ps.setString(3, good.getPrice());
+                ps.setString(4, good.getImg());
+                return ps;
+            }
+        }, keyHolder);
+        log.debug("inserted availability id = {}.", keyHolder.getKey());
+        good.setId(keyHolder.getKey().longValue());
+        return good;
+    }
+
+    @Transactional(readOnly=true)
+    public List<Good> findByTagContaining(String tag) {
+        return jdbcTemplate.query("select * from good where tag like ?",
+                new GoodRowMapper(), "%" + tag + "%");
+    }
+}

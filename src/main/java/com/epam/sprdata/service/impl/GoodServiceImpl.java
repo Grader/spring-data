@@ -1,6 +1,7 @@
 package com.epam.sprdata.service.impl;
 
 import com.epam.sprdata.domain.Good;
+import com.epam.sprdata.repos.GoodRepo;
 import com.epam.sprdata.repos.GoodRepoJdbc;
 import com.epam.sprdata.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,11 @@ import java.util.List;
 @Service
 public class GoodServiceImpl implements GoodService {
 
-//    @Autowired
-//    private GoodRepo goodRepo;
+    @Autowired
+    private GoodRepo goodRepo;
 
     @Autowired
-    private GoodRepoJdbc goodRepo;
+    private GoodRepoJdbc goodRepoJdbc;
 
 //    @Override
 //    public List<Good> findByTagContaining(String tag) {
@@ -24,7 +25,7 @@ public class GoodServiceImpl implements GoodService {
 
     @Override
     public List<Good> findAllGood() {
-        return goodRepo.findAll();
+        return goodRepoJdbc.findAll();
     }
 
 //    @Override
@@ -32,23 +33,23 @@ public class GoodServiceImpl implements GoodService {
 //        return goodRepo.findById(id);
 //    }
 //
-//    @Override
+    @Override
+    public Good save(Good good) {
+        return goodRepo.saveAndFlush(good);
+    }
+
+//        @Override
 //    public Good save(Good good) {
-//        return goodRepo.saveAndFlush(good);
+//        return goodRepo.create(good);
 //    }
 
         @Override
-    public Good save(Good good) {
-        return goodRepo.create(good);
-    }
-
-        @Override
     public Good findById(Long id) {
-        return goodRepo.findGoodById(id);
+        return goodRepoJdbc.findGoodById(id);
     }
 
         @Override
     public List<Good> findByTagContaining(String tag) {
-        return goodRepo.findByTagContaining(tag);
+        return goodRepoJdbc.findByTagContaining(tag);
     }
 }

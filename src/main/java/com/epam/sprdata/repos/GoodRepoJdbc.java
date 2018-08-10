@@ -5,6 +5,7 @@ import com.epam.sprdata.domain.GoodRowMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -28,6 +29,7 @@ public class GoodRepoJdbc {
     private JdbcTemplate jdbcTemplate;
 
     @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "goods", sync = true)
     public List<Good> findAll() {
         return jdbcTemplate.query("select * from good",
                 new GoodRowMapper());

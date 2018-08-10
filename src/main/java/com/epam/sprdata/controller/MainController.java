@@ -27,6 +27,7 @@ public class MainController {
     private CartService cartService;
 
     private List<String> goodList = new ArrayList<>();
+    private Set<Good> selectedGoods = new HashSet<>();
 
     @GetMapping("/")
     public String greeting(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
@@ -66,34 +67,21 @@ public class MainController {
     @GetMapping("/youcart")
     public String yourcart(@AuthenticationPrincipal User user, Model model) {
         Iterable<Good> goods = goodService.findAllGood();
-        Iterable<Cart> carts;
-        Set<Good> selectedGoods = new HashSet<>();
-        Set<Good> allSelectedGoods = new HashSet<>();
-
+        selectedGoods.clear();
         for (String stringId : goodList) {
-            //Good good = goodService.findById(Long.parseLong(stringId)).orElse(new Good());
             Good good = goodService.findById(Long.parseLong(stringId));
             selectedGoods.add(good);
-        }
-        cartService.save(new Cart(user, selectedGoods));
-        carts = cartService.findByUserId(user.getId());
-
-        for (Cart cart : carts) {
-            allSelectedGoods.addAll(cart.getGoods());
         }
         model.addAttribute("goods", goods);
         model.addAttribute("goodList", goodList);
         model.addAttribute("selectedGoods", selectedGoods);
-        model.addAttribute("allSelectedGoods", allSelectedGoods);
         return "youcart";
     }
 
     @GetMapping("/cartdel")
     public String baskDel(@RequestParam(required = false, defaultValue = "") String basketdel, Model model) {
-        Iterable<Good> goods = goodService.findAllGood();
-        model.addAttribute("goods", goods);
-        model.addAttribute("basketdel", basketdel);
         goodList.remove(basketdel);
+        model.addAttribute("basketdel", basketdel);
         return "redirect:/youcart";
     }
 

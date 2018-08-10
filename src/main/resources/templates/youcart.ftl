@@ -11,7 +11,7 @@
                   <p class="text_category">Ваша корзина</p>
               </div>
               <div class="category">
-              <#list allSelectedGoods as good>
+              <#list selectedGoods as good>
 
               <br>
               <div class="products" id="${good.id}">

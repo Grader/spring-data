@@ -1,10 +1,15 @@
 package com.epam.sprdata.domain;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name="Good")
 public class Good {
 
     @Id

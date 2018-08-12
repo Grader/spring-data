@@ -1,6 +1,5 @@
 package com.epam.sprdata.controller;
 
-import com.epam.sprdata.domain.Cart;
 import com.epam.sprdata.domain.Good;
 import com.epam.sprdata.domain.User;
 import com.epam.sprdata.service.CartService;

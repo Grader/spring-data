@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component("restClient")
-public class RESTClientExample {
+public class RESTClientGoods {
 
     @Autowired
     private RestTemplate restTemplate;

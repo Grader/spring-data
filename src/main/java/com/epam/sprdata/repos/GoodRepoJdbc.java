@@ -30,6 +30,8 @@ public class GoodRepoJdbc {
 
     @Cacheable("goods")
     public List<Good> findAll() {
+        simulateSlowService();
+        log.info("Execute method findAll");
         return jdbcTemplate.query("select * from good",
                 new GoodRowMapper());
     }
@@ -38,6 +40,15 @@ public class GoodRepoJdbc {
         return jdbcTemplate.queryForObject(
                 "select * from good where id=?",
                 new Object[]{id}, new GoodRowMapper());
+    }
+
+    private void simulateSlowService() {
+        try {
+            long time = (5000L);
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     public Good create(final Good good) {

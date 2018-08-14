@@ -6,7 +6,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
-@ImportResource({ "classpath:webservice-definition-beans.xml" })
+//@ImportResource({ "classpath:webservice-definition-beans.xml" })
 @EnableCaching
 public class Application {
     public static void main(String[] args) {

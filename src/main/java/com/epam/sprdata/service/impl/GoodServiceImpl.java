@@ -18,38 +18,40 @@ public class GoodServiceImpl implements GoodService {
     @Autowired
     private GoodRepoJdbc goodRepoJdbc;
 
-//    @Override
-//    public List<Good> findByTagContaining(String tag) {
-//        return goodRepo.findByTagContaining(tag);
-//    }
-
     @Override
     public List<Good> findAllGood() {
         return goodRepoJdbc.findAll();
     }
+
+    @Override
+    public Good save(Good good) {
+        return goodRepo.saveAndFlush(good);
+    }
+
+    @Override
+    public Good findById(Long id) {
+        return goodRepoJdbc.findGoodById(id);
+    }
+
+    @Override
+    public List<Good> findByTagContaining(String tag) {
+        return goodRepoJdbc.findByTagContaining(tag);
+    }
+
+//        @Override
+//    public Good save(Good good) {
+//        return goodRepoJdbc.create(good);
+//    }
 
 //    @Override
 //    public Optional<Good> findById(Long id) {
 //        return goodRepo.findById(id);
 //    }
 //
-    @Override
-    public Good save(Good good) {
-        return goodRepo.saveAndFlush(good);
-    }
 
-//        @Override
-//    public Good save(Good good) {
-//        return goodRepo.create(good);
+//    @Override
+//    public List<Good> findByTagContaining(String tag) {
+//        return goodRepo.findByTagContaining(tag);
 //    }
 
-        @Override
-    public Good findById(Long id) {
-        return goodRepoJdbc.findGoodById(id);
-    }
-
-        @Override
-    public List<Good> findByTagContaining(String tag) {
-        return goodRepoJdbc.findByTagContaining(tag);
-    }
 }

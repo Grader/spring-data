@@ -16,9 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
-import java.util.Objects;
 
 @Repository
 public class GoodRepoJdbc {
@@ -28,27 +26,23 @@ public class GoodRepoJdbc {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "goods", sync = true)
+    @Cacheable("goods")
     public List<Good> findAll() {
         return jdbcTemplate.query("select * from good",
                 new GoodRowMapper());
     }
 
-    @Transactional(readOnly = true)
     public Good findGoodById(Long id) {
         return jdbcTemplate.queryForObject(
                 "select * from good where id=?",
                 new Object[]{id}, new GoodRowMapper());
     }
 
-    @Transactional
     public Good create(final Good good) {
         final String sql = "insert into good (cat,tag,price,img) values(?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
-            public PreparedStatement createPreparedStatement(
-                    Connection connection) throws SQLException {
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(sql, new String[]{"id"});
                 ps.setString(1, good.getCat());
                 ps.setString(2, good.getTag());
@@ -57,12 +51,9 @@ public class GoodRepoJdbc {
                 return ps;
             }
         }, keyHolder);
-        log.debug("inserted availability id = {}.", keyHolder.getKey());
-        good.setId(keyHolder.getKey().longValue());
         return good;
     }
 
-    @Transactional(readOnly = true)
     public List<Good> findByTagContaining(String tag) {
         return jdbcTemplate.query("select * from good where tag like ?",
                 new GoodRowMapper(), "%" + tag + "%");

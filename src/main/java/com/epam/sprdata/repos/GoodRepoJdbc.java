@@ -31,7 +31,7 @@ public class GoodRepoJdbc {
     @Cacheable("goods")
     public List<Good> findAll() {
         simulateSlowService();
-        log.info("Execute method findAll");
+        log.info("method works");
         return jdbcTemplate.query("select * from good",
                 new GoodRowMapper());
     }

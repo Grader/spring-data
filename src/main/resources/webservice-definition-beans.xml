@@ -17,9 +17,5 @@
             id="GoodWebService"
             implementor="#goodWebServiceImpl"
             address="/GoodWebService">
-        <jaxws:features>
-            <bean class="org.apache.cxf.ext.logging.LoggingFeature"/>
-        </jaxws:features>
     </jaxws:endpoint>
-
 </beans>

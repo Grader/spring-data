@@ -8,10 +8,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableCaching
+@ImportResource({ "classpath:webservice-definition-beans.xml" })
 public class Application {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);

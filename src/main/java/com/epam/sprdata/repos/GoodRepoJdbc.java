@@ -30,7 +30,7 @@ public class GoodRepoJdbc {
 
     @Cacheable("goods")
     public List<Good> findAll() {
-        simulateSlowService();
+        //simulateSlowService();
         log.info("method works");
         return jdbcTemplate.query("select * from good",
                 new GoodRowMapper());

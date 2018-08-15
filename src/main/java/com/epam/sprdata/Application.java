@@ -21,7 +21,7 @@ public class Application {
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(Application.class, args);
         log.info("response 1: {}", ((RESTClientGoods) context.getBean("restClient")).getAllGoods());
-        log.info("response 2: {}", ((RESTClientGoods) context.getBean("restClient")).getGoods("3"));
+        log.info("response 2: {}", ((RESTClientGoods) context.getBean("restClient")).getGoods("jk"));
         log.info("response 3: {}", ((RESTClientGoods) context.getBean("restClient")).getTranslate
                 ("trnsl.1.1.20180814T170902Z.00ef54543e0b6b00.ea30e19c253c364884595bfd3f4d5e9554a40f9d",
                         "Hello world", "en-ru"));

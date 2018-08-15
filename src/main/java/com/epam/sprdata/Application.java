@@ -10,7 +10,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
-
 @SpringBootApplication
 @EnableCaching
 public class Application {
@@ -30,5 +29,4 @@ public class Application {
     public RestTemplate geRestTemplate() {
         return new RestTemplate();
     }
-
 }
